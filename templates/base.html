@@ -1,0 +1,36 @@
+<head>
+    <title>Periodic Table Game Online</title>
+    <link rel="stylesheet" type="text/css" href="/css/master.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin=""/>
+    <script src="/js/script.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+</head>
+
+<body>
+    <!-- navbar -->
+    <nav class="navBar">
+        <a href="{{ url_for('index') }}"></a>
+        <div>
+            <ul>
+                <li id="navBar"><a href="{{ url_for('index') }}">Home</a></li>
+                <li id="navBar"><a href="{{ url_for('login') }}">Account</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    {% block content %}
+
+    {% endblock %}
+
+    <!-- bottom banner -->
+    <div class="bottom_banner">
+        <h4>Names: Paul Detloff, Camden Smith, Noah Lee, Saif Alam</h4>
+        <h4>Blazerid: pdetloff, ctsmith7, nlee294, </h4>
+        <h4>Periodic Table Game Online</h4>
+    </div>
+
+</body>
