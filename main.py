@@ -64,29 +64,29 @@ def register():
                             unique_user=unique_user)
 
 # register checker
-@app.route('/register_pass_fail', methods=["POST"])
+@app.route('/register_pass_fail', methods=["GET", "POST"])
 def register_pass_fail():
-    username = request.form.get('username')
-    password = request.form.get('password')
-
     matched_username = ""
     passed = True
 
     # check if username is taken
     if request.method == "POST":
         username = request.form.get('username')
-        check_username = username_checker(username)
-        if check_username:
-            passed = False
-            matched_username = "*Username already in use"
-        else:
-            passed = True
+        password = request.form.get('password')
+        email = request.form.get('email')
 
-        if passed:
-            account_create(username,password)
-            return render_template('successful.html', output="Account Creation Successful!")
-        else:
-            'TODO'
+        #check_username = username_checker(username)
+        #if check_username:
+        #    passed = False
+        #    matched_username = "*Username already in use"
+        #else:
+        #    passed = True
+
+        #if passed:
+        account_create(username,password,email)
+        return render_template('successful.html', output="Account Creation Successful!")
+        #else:
+        #    'TODO'
 
 
 @app.errorhandler(404)

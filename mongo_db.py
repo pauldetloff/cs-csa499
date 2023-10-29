@@ -13,18 +13,20 @@ except Exception as e:
     print(e)
 
 # database
-db = 'TODO'
+db = client.pt_game
 
 # collections
-user_collection = 'TODO'
+user_collection = db.users
+element_collection = db.elements
 
 # ACCOUNT FUNCTIONS
-def account_create(username, password):
+def account_create(username, password, email):
     # user account structure in user_collection
     user = {
         'username': username,
         'password': password,
-        'items': {}
+        'email': email,
+        'highscore': 0
     }
     user_collection.insert_one(user)
 

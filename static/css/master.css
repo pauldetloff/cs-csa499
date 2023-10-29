@@ -44,3 +44,38 @@ nav {
     color: #b98345;
 }
 
+
+/* Table Window */
+.table_window {
+    display: grid;
+    grid-template-columns: repeat(18, 100px); /* Adjust the number of columns and size as needed */
+    gap: 10px; /* Adjust the gap between cells as needed */
+}
+
+.table_element {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px; /* Adjust the width and height as needed */
+    height: 100px;
+    background-color: #3498db; /* Background color */
+    color: #fff; /* Text color */
+    font-size: 24px; /* Font size */
+    font-weight: bold;
+}
+
+.table_empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px; /* Adjust the width and height as needed */
+    height: 100px;
+    background-color: #3498db; /* Background color */
+    color: #fff; /* Text color */
+    font-size: 24px; /* Font size */
+    font-weight: bold;
+}
+
+/* Question Window */
+
+
