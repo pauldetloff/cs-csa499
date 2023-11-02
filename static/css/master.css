@@ -5,6 +5,38 @@
     padding: 0;
 }
 
+.wrapper {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 3fr 3fr;
+  }
+
+  .leaderboard{
+    grid-column: 1 ; 
+    grid-row: 1 / span 2; 
+  }
+
+  .game_stats{
+    grid-column: 2 ;
+    grid-row: 1 ;
+  }
+
+  /* Table Window */
+.table_window {
+    grid-column: 2 ; 
+    grid-row: 2 ;
+    display: grid;
+    grid-template-columns: repeat(18, 100px); /* Adjust the number of columns and size as needed */
+    gap: 10px; /* Adjust the gap between cells as needed */
+}
+
+  /* Question Window */
+.question_window {
+    grid-column: 3 ; 
+    grid-row: 1 / span 2;
+    background-color: rgb(49, 47, 47);
+}
+
 body {
     background-color: rgb(49, 47, 47);
     color: white;
@@ -35,9 +67,13 @@ nav {
 
 /* Bottom Banner */
 .bottom_banner {
-    padding: 10vh 0vh;
-    width: 90%;
-    margin: 0 auto;
+    position: relative;
+    left: 50%;
+    bottom: 0;
+    transform: translateX(-50%);
+    text-align: center
+    
+    
 }
 
 .bottom_banner h1 {
@@ -45,12 +81,7 @@ nav {
 }
 
 
-/* Table Window */
-.table_window {
-    display: grid;
-    grid-template-columns: repeat(18, 100px); /* Adjust the number of columns and size as needed */
-    gap: 10px; /* Adjust the gap between cells as needed */
-}
+
 
 .table_element {
     display: flex;
@@ -64,18 +95,17 @@ nav {
     font-weight: bold;
 }
 
-.table_empty {
+.table_blank {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 100px; /* Adjust the width and height as needed */
     height: 100px;
-    background-color: #3498db; /* Background color */
+    background-color: rgb(49, 47, 47); /* Background color */
     color: #fff; /* Text color */
     font-size: 24px; /* Font size */
     font-weight: bold;
 }
 
-/* Question Window */
 
 

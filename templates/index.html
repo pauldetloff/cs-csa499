@@ -4,24 +4,62 @@
 
 <script type="text/javascript" src="{{ url_for('static', filename='script.js') }}"></script>
 
-<div class="leaderboard">
-    <h1>Leaderboard</h1>
-</div>
+<div class="wrapper">
+    <div class="leaderboard">
+        <h1>Leaderboard</h1>
+    </div>
 
-<div class="game_stats">
-    <h1>Game Stats</h1>
-</div>
+    <div class="game_stats">
+        <h1>Game Stats</h1>
+    </div>
 
-<div class="table_window" id="periodic-table">
+    <div class="table_window" id="periodic_table">
 
+    </div>
+
+    <div class="question_window" id="question_window">
+        <h1>Question Window</h1>
+
+        <button onclick="displayRandomAtomicNumber()">New Problem</button>
+        <div class="question" id="question"></div>
+
+        <input type="text" id="answer">
+        <button onclick=""> Check Answer</button>
+    </div>
 </div>
 
 <script>
     const periodicTableData = [
         { symbol: "H", name: "Hydrogen", group: "nonmetal", atomicNumber: 1, mass: 1.01 },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
         { symbol: "He", name: "Helium", group: "noble_gas", atomicNumber: 2, mass: 4.00 },
         { symbol: "Li", name: "Lithium", group: "alkali_metal", atomicNumber: 3, mass: 6.94 },
         { symbol: "Be", name: "Beryllium", group: "alkaline_earth_metal", atomicNumber: 4, mass: 9.01 },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
         { symbol: "B", name: "Boron", group: "metalloid", atomicNumber: 5, mass: 10.81 },
         { symbol: "C", name: "Carbon", group: "nonmetal", atomicNumber: 6, mass: 12.01 },
         { symbol: "N", name: "Nitrogen", group: "nonmetal", atomicNumber: 7, mass: 14.01 },
@@ -30,6 +68,16 @@
         { symbol: "Ne", name: "Neon", group: "noble_gas", atomicNumber: 10, mass: 20.18 },
         { symbol: "Na", name: "Sodium", group: "alkali_metal", atomicNumber: 11, mass: 22.99 },
         { symbol: "Mg", name: "Magnesium", group: "alkaline_earth_metal", atomicNumber: 12, mass: 24.31 },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
         { symbol: "Al", name: "Aluminum", group: "post_transition_metal", atomicNumber: 13, mass: 26.98 },
         { symbol: "Si", name: "Silicon", group: "metalloid", atomicNumber: 14, mass: 28.09 },
         { symbol: "P", name: "Phosphorus", group: "nonmetal", atomicNumber: 15, mass: 30.97 },
@@ -75,21 +123,6 @@
         { symbol: "Cs", name: "Cesium", group: "alkali_metal", atomicNumber: 55, mass: 132.9 },
         { symbol: "Ba", name: "Barium", group: "alkaline_earth_metal", atomicNumber: 56, mass: 137.3 },
         { symbol: "La", name: "Lanthanum", group: "lanthanide", atomicNumber: 57, mass: 138.9 },
-        { symbol: "Ce", name: "Cerium", group: "lanthanide", atomicNumber: 58, mass: 140.1 },
-        { symbol: "Pr", name: "Praseodymium", group: "lanthanide", atomicNumber: 59, mass: 140.9 },
-        { symbol: "Nd", name: "Neodymium", group: "lanthanide", atomicNumber: 60, mass: 144.2 },
-        { symbol: "Pm", name: "Promethium", group: "lanthanide", atomicNumber: 61, mass: 145.0 },
-        { symbol: "Sm", name: "Samarium", group: "lanthanide", atomicNumber: 62, mass: 150.4 },
-        { symbol: "Eu", name: "Europium", group: "lanthanide", atomicNumber: 63, mass: 152.0 },
-        { symbol: "Gd", name: "Gadolinium", group: "lanthanide", atomicNumber: 64, mass: 157.3 },
-        { symbol: "Tb", name: "Terbium", group: "lanthanide", atomicNumber: 65, mass: 158.9 },
-        { symbol: "Dy", name: "Dysprosium", group: "lanthanide", atomicNumber: 66, mass: 162.5 },
-        { symbol: "Ho", name: "Holmium", group: "lanthanide", atomicNumber: 67, mass: 164.9 },
-        { symbol: "Er", name: "Erbium", group: "lanthanide", atomicNumber: 68, mass: 167.3 },
-        { symbol: "Tm", name: "Thulium", group: "lanthanide", atomicNumber: 69, mass: 168.9 },
-        { symbol: "Yb", name: "Ytterbium", group: "lanthanide", atomicNumber: 70, mass: 173.0 },
-        { symbol: "Lu", name: "Lutetium", group: "lanthanide", atomicNumber: 71, mass: 175.0 },
-        { symbol: "Lu", name: "Lutetium", group: "lanthanide", atomicNumber: 71, mass: 175.0 },
         { symbol: "Hf", name: "Hafnium", group: "transition_metal", atomicNumber: 72, mass: 178.5 },
         { symbol: "Ta", name: "Tantalum", group: "transition_metal", atomicNumber: 73, mass: 180.9 },
         { symbol: "W", name: "Tungsten", group: "transition_metal", atomicNumber: 74, mass: 183.8 },
@@ -108,6 +141,60 @@
         { symbol: "Fr", name: "Francium", group: "alkali_metal", atomicNumber: 87, mass: 223.0 },
         { symbol: "Ra", name: "Radium", group: "alkaline_earth_metal", atomicNumber: 88, mass: 226.0 },
         { symbol: "Ac", name: "Actinium", group: "actinide", atomicNumber: 89, mass: 227.0 },
+        { symbol: "Rf", name: "Rutherfordium", group: "transition_metal", atomicNumber: 104, mass: 267.0 },
+        { symbol: "Db", name: "Dubnium", group: "transition_metal", atomicNumber: 105, mass: 268.0 },
+        { symbol: "Sg", name: "Seaborgium", group: "transition_metal", atomicNumber: 106, mass: 269.0 },
+        { symbol: "Bh", name: "Bohrium", group: "transition_metal", atomicNumber: 107, mass: 270.0 },
+        { symbol: "Hs", name: "Hassium", group: "transition_metal", atomicNumber: 108, mass: 277.0 },
+        { symbol: "Mt", name: "Meitnerium", group: "unknown_properties", atomicNumber: 109, mass: 278.0 },
+        { symbol: "Ds", name: "Darmstadtium", group: "unknown_properties", atomicNumber: 110, mass: 281.0 },
+        { symbol: "Rg", name: "Roentgenium", group: "unknown_properties", atomicNumber: 111, mass: 282.0 },
+        { symbol: "Cn", name: "Copernicium", group: "transition_metal", atomicNumber: 112, mass: 285.0 },
+        { symbol: "Nh", name: "Nihonium", group: "unknown_properties", atomicNumber: 113, mass: 286.0 },
+        { symbol: "Fl", name: "Flerovium", group: "unknown_properties", atomicNumber: 114, mass: 289.0 },
+        { symbol: "Mc", name: "Moscovium", group: "unknown_properties", atomicNumber: 115, mass: 290.0 },
+        { symbol: "Lv", name: "Livermorium", group: "unknown_properties", atomicNumber: 116, mass: 293.0 },
+        { symbol: "Ts", name: "Tennessine", group: "unknown_properties", atomicNumber: 117, mass: 294.0 },
+        { symbol: "Og", name: "Organesson", group: "unknown_properties", atomicNumber: 118, mass: 294.0 },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: "Ce", name: "Cerium", group: "lanthanide", atomicNumber: 58, mass: 140.1 },
+        { symbol: "Pr", name: "Praseodymium", group: "lanthanide", atomicNumber: 59, mass: 140.9 },
+        { symbol: "Nd", name: "Neodymium", group: "lanthanide", atomicNumber: 60, mass: 144.2 },
+        { symbol: "Pm", name: "Promethium", group: "lanthanide", atomicNumber: 61, mass: 145.0 },
+        { symbol: "Sm", name: "Samarium", group: "lanthanide", atomicNumber: 62, mass: 150.4 },
+        { symbol: "Eu", name: "Europium", group: "lanthanide", atomicNumber: 63, mass: 152.0 },
+        { symbol: "Gd", name: "Gadolinium", group: "lanthanide", atomicNumber: 64, mass: 157.3 },
+        { symbol: "Tb", name: "Terbium", group: "lanthanide", atomicNumber: 65, mass: 158.9 },
+        { symbol: "Dy", name: "Dysprosium", group: "lanthanide", atomicNumber: 66, mass: 162.5 },
+        { symbol: "Ho", name: "Holmium", group: "lanthanide", atomicNumber: 67, mass: 164.9 },
+        { symbol: "Er", name: "Erbium", group: "lanthanide", atomicNumber: 68, mass: 167.3 },
+        { symbol: "Tm", name: "Thulium", group: "lanthanide", atomicNumber: 69, mass: 168.9 },
+        { symbol: "Yb", name: "Ytterbium", group: "lanthanide", atomicNumber: 70, mass: 173.0 },
+        { symbol: "Lu", name: "Lutetium", group: "lanthanide", atomicNumber: 71, mass: 175.0 },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null },
         { symbol: "Th", name: "Thorium", group: "actinide", atomicNumber: 90, mass: 232.0 },
         { symbol: "Pa", name: "Protactinium", group: "actinide", atomicNumber: 91, mass: 231.0 },
         { symbol: "U", name: "Uranium", group: "actinide", atomicNumber: 92, mass: 238.0 },
@@ -121,14 +208,20 @@
         { symbol: "Fm", name: "Fermium", group: "actinide", atomicNumber: 100, mass: 257.0 },
         { symbol: "Md", name: "Mendelevium", group: "actinide", atomicNumber: 101, mass: 258.0 },
         { symbol: "No", name: "Nobelium", group: "actinide", atomicNumber: 102, mass: 259.0 },
-        { symbol: "Lr", name: "Lawrencium", group: "transition_metal", atomicNumber: 103, mass: 266.0 }
+        { symbol: "Lr", name: "Lawrencium", group: "transition_metal", atomicNumber: 103, mass: 266.0 },
+        { symbol: " ", name: " ", group: "blank", atomicNumber: null, mass: null }
     ];
-  
-    const gridContainer = document.getElementById("periodic-table");
-  
+
+    const gridContainer = document.getElementById("periodic_table");
+    
     periodicTableData.forEach((elementData) => {
         const gridCell = document.createElement("div");
-        gridCell.classList.add("table_element");
+        
+        if (elementData.group != "blank") {
+            gridCell.classList.add("table_element");
+        } else {
+            gridCell.classList.add("table_blank");
+        }
 
         const symbolDiv = document.createElement("div");
         symbolDiv.classList.add("symbol");
@@ -141,12 +234,53 @@
         gridCell.appendChild(symbolDiv);
         gridCell.appendChild(numDiv);
 
+        
+        gridCell.appendChild(numDiv);
+
         gridContainer.appendChild(gridCell);
     });
-</script>
+    
+    
 
-<div class="question_window">
-    <h1>Question Window</h1>
-</div>
+    //const gridElements = document.getElementById(".table_element");
+
+    const questionContainer = document.getElementById("question");
+    const newProblemButton = document.getElementById("new-problem-button");
+
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array
+    }
+
+    shuffledElements = shuffleArray(periodicTableData);
+    let elementIndex = 0;
+    function displayRandomAtomicNumber() {
+        if (elementIndex < shuffledElements.length) {
+            if (shuffledElements[elementIndex].group != "blank") {
+                questionContainer.innerText = `Atomic Number: ${shuffledElements[elementIndex].atomicNumber}`;
+                elementIndex++;
+            } else {
+                elementIndex++;
+                displayRandomAtomicNumber(); // Skip blank elements and proceed to the next
+            }
+        } else {
+            questionContainer.innerText = "No more elements to display";
+        }
+    }
+
+    /* function checkAnswer(correctName) {
+            const userAnswer = parseFloat(document.getElementById('answer').value);
+            if (userAnswer == correctName){
+                // clears spot on grid (i think)
+                gridElements.forEach(gridCell) => {
+                    if (parseInt(gridCell.querySelector(".name")))
+                }
+            }
+        }*/
+        
+</script>
 
 {% endblock %}

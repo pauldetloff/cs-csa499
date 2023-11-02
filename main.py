@@ -27,6 +27,7 @@ def login():
 
         # check if input credentials match a stored account
         check_user = login_checker(username_login, password_login)
+        print(username_login, password_login)
         if check_user:
             session["name"] = username_login
             return render_template('login.html')
@@ -46,7 +47,7 @@ def logout():
 # register
 @app.route('/register')
 def register():
-    charactersrq = "*Password must be 8 or more characters."
+    pass_len = "*Password must be 8 or more characters."
     numbers = "*Password must end in a number."
     upper = "*Password must contain uppercased character."
     lower = "*Password must contain lowercased character."
@@ -55,7 +56,7 @@ def register():
 
     return render_template('register.html', 
                             output="Password Requirements", 
-                            charactersrq=charactersrq, 
+                            pass_len=pass_len,
                             numbers=numbers, 
                             lower=lower, 
                             upper=upper,

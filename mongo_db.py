@@ -31,9 +31,7 @@ def account_create(username, password, email):
     user_collection.insert_one(user)
 
 def login_checker(username, password):
-    # how to use find_one https://www.geeksforgeeks.org/python-mongodb-find_one-query/#
     user_creds = user_collection.find_one({'username': username, 'password': password})
-    # user_id = user_creds["_id"]
     if user_creds:
         return True
     else:
