@@ -22,8 +22,6 @@ def index():
     leaderboardArray = leaderboard()
     leaderboardScores = []
     leaderboardNames = []
-    #https://pythonhow.com/how/sort-a-list-of-dictionaries-by-a-value-of-the-dictionary/#:~:text=age'%3A%2030%7D%5D-,To%20sort%20a%20list%20of%20dictionaries%20by%20a%20value%20of,the%20list%20should%20be%20sorted.
-    #used to sort dictionaries 
     sorted_leaderboard = sorted(leaderboardArray, key=operator.itemgetter('highscore'))
     sorted_leaderboard.reverse()
 
@@ -64,7 +62,6 @@ def account():
             completed_game_count = user['completed_game_count']
             return render_template('account.html', email = email, username=username, highscore = highscore, game_count = game_count, completed_game_count = completed_game_count)
     else:
-        print("oops")
         return redirect('/login')
 
 #login page
