@@ -1,6 +1,7 @@
-from flask import Flask, render_template, redirect, request, session
-from mongo_db import account_create, login_checker, username_checker
+from flask import Flask, render_template, redirect, url_for, request, session, jsonify
+from mongo_db import account_create, user_checker, get_user, username_checker, leaderboard, check_score
 from flask_session import Session
+import operator
 
 app = Flask(__name__, 
             static_url_path='',
@@ -12,13 +13,61 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+# default gamemode
+game_mode = "Symbol - 1.00x"
+
 #home page
-@app.route('/')
+@app.route('/', methods=["GET", "POST"])
 def index():
-    return render_template('index.html')
+    leaderboardArray = leaderboard()
+    leaderboardScores = []
+    leaderboardNames = []
+    #https://pythonhow.com/how/sort-a-list-of-dictionaries-by-a-value-of-the-dictionary/#:~:text=age'%3A%2030%7D%5D-,To%20sort%20a%20list%20of%20dictionaries%20by%20a%20value%20of,the%20list%20should%20be%20sorted.
+    #used to sort dictionaries 
+    sorted_leaderboard = sorted(leaderboardArray, key=operator.itemgetter('highscore'))
+    sorted_leaderboard.reverse()
+
+    if request.method == "POST":
+        game_mode = request.form.get('gm')
+        print(game_mode)
+        return render_template('index.html', game_mode = game_mode, sorted_leaderboard = sorted_leaderboard[:50])
+
+    return render_template('index.html', game_mode = "Symbol => Name (1.00x)", sorted_leaderboard = sorted_leaderboard[:50])
+
+@app.route('/endGame', methods=["GET", 'POST'])
+def endGame():
+    score = int(request.form.get('score_output'))
+    game_completed = request.form.get('game_completed')
+    print(type(game_completed))
+    print("COMPLETE? ", game_completed)
+
+    if session["name"]:
+        check_score(session["name"], score, game_completed)
+    return redirect('/')
+
+#study page
+@app.route('/study')
+def study():
+    return render_template('study.html')
+
+#account page
+@app.route('/account')
+def account():
+    print(session["name"])
+    if session["name"]:
+        user = get_user(session["name"])
+        if user:
+            username = user['username']
+            email = user['email']
+            highscore = user['highscore']
+            game_count = user['game_count']
+            completed_game_count = user['completed_game_count']
+            return render_template('account.html', email = email, username=username, highscore = highscore, game_count = game_count, completed_game_count = completed_game_count)
+    else:
+        print("oops")
+        return redirect('/login')
 
 #login page
-# flask session: https://www.geeksforgeeks.org/how-to-use-flask-session-in-python-flask/#
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -26,14 +75,13 @@ def login():
         password_login = request.form.get('login_password')
 
         # check if input credentials match a stored account
-        check_user = login_checker(username_login, password_login)
-        print(username_login, password_login)
-        if check_user:
+        target_user = user_checker(username_login, password_login)
+        if target_user:
             session["name"] = username_login
-            return render_template('login.html')
+
+            return render_template('account.html')
         else:
             return render_template('login.html')
-    
     else:
         return render_template('login.html')
 

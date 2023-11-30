@@ -1,6 +1,7 @@
 <head>
     <title>Periodic Table Game Online</title>
     <link rel="stylesheet" type="text/css" href="/css/master.css">
+    <link rel="stylesheet" type="text/css" href="/css/account.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
         crossorigin=""/>
@@ -14,7 +15,8 @@
         <div>
             <ul>
                 <li id="navBar"><a href="{{ url_for('index') }}">Home</a></li>
-                <li id="navBar"><a href="{{ url_for('login') }}">Account</a></li>
+                <li id="navBar"><a href="{{ url_for('account') }}">Account</a></li>
+                <li id="navBar"><a href="{{ url_for('study') }}">Study</a></li>
             </ul>
         </div>
     </nav>
