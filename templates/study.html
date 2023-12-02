@@ -208,19 +208,17 @@
             gridCell.id = elementData.atomicNumber.toString();
     
             gridCell.addEventListener("click", () => {
-            console.log('Clicked element:', gridCell.id);
+            // Remove the clicked class from the previously clicked element
+            const previouslyClickedElement = document.querySelector(".study_table_element.clicked");
+            if (previouslyClickedElement) {
+            previouslyClickedElement.classList.remove("clicked");
+            }
 
-            // Remove "clicked" class from all elements
-            allElements.forEach(element => {
-                console.log('Removing "clicked" class from element:', element.id);
-                element.classList.remove("clicked");
-            });
-
-            // Add "clicked" class to the clicked element
+            // Add the clicked class to the current element
             gridCell.classList.add("clicked");
 
-            displayElementInformation(elementData);
-            });
+    displayElementInformation(elementData);
+  });
         } else {
             gridCell.classList.add("table_blank");
         }
