@@ -7,17 +7,14 @@
         <br>
         
         <form id="login_form" class="login_form" method="post" action="{{url_for('login')}}"> 
-
             <label for="login_username"><b>Username</b></label>
             <input id="login_username" type="text" name="login_username" placeholder="Enter Username" required>
             <br>
             <label for="login_password"><b>Password</b></label>
             <input id="login_password" type="password" name="login_password" placeholder="Enter Password" required>
             <br>
-            <button type="submit" class="login_button"><a href="{{ url_for('account') }}">Log In</a></button>
-            <button id="register_button" type="button" class="login_button"><a href="{{ url_for('register') }}">Register Now</a></button>
+            <button type="submit" class="login_button">Log In</button>
         </form>
-        
+        <button id="register_button" class="login_button" onclick="window.location.href='{{ url_for('register') }}'">Register Now</button>
     </div>
-
 {% endblock %}

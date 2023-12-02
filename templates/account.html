@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 
 {% block content %}
-<body>
     <div class = "account_container">
         <div class = top>
             <h2 class="username">Username: {{ username }}</h2><br>
             <h2 class="email">Email: {{ email }}</h2><br>
         </div>
 
+        <br>
         <div class="backboard">
             <div class = "acinfo"><h3>Overall Highscore: {{ highscore }}</h3></div><br>
             <div class = "acinfo">Games Played: {{ game_count }}</div><br>
             <div class = "acinfo">Games Completed: {{ completed_game_count }}</div>
         </div>
 
-        <button id="logout_button" type="button" class="login_button"><a href="{{ url_for('logout') }}">Log Out</a></button>
+        <br>
+        <button id="logout_button" class="login_button" onclick="window.location.href='{{ url_for('logout') }}'">Logout</button>
     </div>
-</body>
 {% endblock %}

@@ -13,8 +13,10 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
+
+
 # default gamemode
-game_mode = "Symbol - 1.00x"
+game_mode = "Symbol => Name (1.00x)"
 
 #home page
 @app.route('/', methods=["GET", "POST"])
@@ -51,18 +53,20 @@ def study():
 #account page
 @app.route('/account')
 def account():
-    print(session["name"])
-    if session["name"]:
-        user = get_user(session["name"])
-        if user:
+    try:
+        if session["name"]:
+            user = get_user(session["name"])
+
             username = user['username']
             email = user['email']
             highscore = user['highscore']
             game_count = user['game_count']
             completed_game_count = user['completed_game_count']
             return render_template('account.html', email = email, username=username, highscore = highscore, game_count = game_count, completed_game_count = completed_game_count)
-    else:
-        return redirect('/login')
+        else:
+            return render_template('login.html')
+    except:
+        return render_template('login.html')
 
 #login page
 @app.route('/login', methods=["GET", "POST"])
@@ -76,7 +80,7 @@ def login():
         if target_user:
             session["name"] = username_login
 
-            return render_template('account.html')
+            return redirect('/account')
         else:
             return render_template('login.html')
     else:
@@ -87,52 +91,34 @@ def login():
 def logout():
     # reset session name to None
     session["name"] = None
-    return render_template('login.html')
+    return redirect('/account')
 
 # register
 @app.route('/register')
 def register():
-    pass_len = "*Password must be 8 or more characters."
-    numbers = "*Password must end in a number."
-    upper = "*Password must contain uppercased character."
-    lower = "*Password must contain lowercased character."
-    usernameRQ = "*Username must be 5 or more characters."
-    unique_user = "*Username must be unique."
-
-    return render_template('register.html', 
-                            output="Password Requirements", 
-                            pass_len=pass_len,
-                            numbers=numbers, 
-                            lower=lower, 
-                            upper=upper,
-                            output2="Username Requirments",
-                            usernameRQ=usernameRQ,
-                            unique_user=unique_user)
+    return render_template('register.html')
 
 # register checker
 @app.route('/register_pass_fail', methods=["GET", "POST"])
 def register_pass_fail():
     matched_username = ""
     passed = True
+    output = "Username Taken"
 
-    # check if username is taken
+    # check if username is taken and password meets requirements
     if request.method == "POST":
         username = request.form.get('username')
         password = request.form.get('password')
         email = request.form.get('email')
 
-        #check_username = username_checker(username)
-        #if check_username:
-        #    passed = False
-        #    matched_username = "*Username already in use"
-        #else:
-        #    passed = True
+        if username_checker(username):
+            passed = False
 
-        #if passed:
-        account_create(username,password,email)
-        return render_template('successful.html', output="Account Creation Successful!")
-        #else:
-        #    'TODO'
+        if passed:
+            account_create(username, password, email)
+            return redirect('/login')
+        else:
+            return render_template('register.html', output = output)
 
 
 @app.errorhandler(404)
