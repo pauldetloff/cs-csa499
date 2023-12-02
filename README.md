@@ -1,4 +1,5 @@
 Periodic Table Web Game
+
 cs-csa499 Capstone Project
 
 Authors:
